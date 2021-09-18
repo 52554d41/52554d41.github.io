@@ -1,0 +1,210 @@
+<html>
+    <head>
+		<!todo: wheel speed control>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>rotary keyboard</title>
+		<link rel="stylesheet" href="../sw.css">
+    </head>
+	<body>
+		<div class="container1left">
+		<div class="container2">
+		    <h1 class="container1center">rotary keyboard</h1>
+			<p>the best input method</p>
+            <p>type by clicking print when the arrow points at your desired character</p>
+			<p><a href="https://52554d41.xyz/">back to homepage</a></p>
+            <br>
+			<br>
+			<br>
+			<div class="container1center">
+				<img class="wheel" id="wheel" src="../imgs/wheel.png" alt="wheel" width="434" height="434">
+				<img class="arrow" id="arrow" src="../imgs/arrow.png" alt="arrow" width="128" height="128">
+				<br>
+				<br>
+				<div class="buttons">
+				<button class="buttons" onclick="startWheel()">start</button>
+				<button class="buttons" onclick="printText()">print</button>
+				<button class="buttons" onclick="stopWheel()">stop</button>
+				<!button onclick="printTextDebug()"print (debug)/button>
+				<br>
+				<br>			
+				<label>
+				<input id="arrowToggleBox" type="checkbox"checked="checked"> arrow 
+				</label>
+				<!pwheel speed (less is faster)/p>
+				<!input type="text" id="speedRange" value="91">
+				<!input type="range" min="15" max="168" value="91" class="slider" id="speedRange">
+				<!pcurrent speed: <!span id="currentSpeed"/span/p>
+				<button onclick="arrowToggle()">save settings</button>
+				<br>
+				<br>
+				</div>
+				<form name="outputForm">
+				<textarea id="outputText" rows="5" placeholder="output here..." readonly></textarea>
+				</form>
+			</div>
+		</div>
+		</div>
+        <script>		
+		function getCurrentRotation(el) {
+		var st = window.getComputedStyle(el, null);
+		var tm = st.getPropertyValue("-webkit-transform") ||
+           st.getPropertyValue("-moz-transform") ||
+           st.getPropertyValue("-ms-transform") ||
+           st.getPropertyValue("-o-transform") ||
+           st.getPropertyValue("transform") ||
+           "none";
+		if (tm != "none") {
+			var values = tm.split('(')[1].split(')')[0].split(',');
+			var angle = Math.round(Math.atan2(values[1],values[0]) * (180/Math.PI));
+			return (angle < 0 ? angle + 360 : angle); 
+		}
+		return 0;
+	}
+		const arrow = document.getElementById('arrow');
+		function arrowToggle() {
+		var isChecked = document.getElementById("arrowToggleBox").checked;			
+			if(isChecked) {
+			arrow.style.display = "inline";
+			// console.log("arrow on");
+			} else {
+			arrow.style.display = "none";
+			// console.log("arrow off");
+		}
+	}	
+		const wheel = document.getElementById('wheel');
+		function startWheel() {
+		wheel.style.animationPlayState = "running";
+	}
+		function stopWheel() {
+		wheel.style.animationPlayState = "paused";
+	}
+		function printText() {
+		var currentWheelRotation = getCurrentRotation(document.getElementById("wheel"));
+		var currentSegment = Math.floor(currentWheelRotation / 9);
+		switch(currentSegment) {
+			case 0:
+			document.outputForm.outputText.value += ("j");
+			break;
+			case 1:
+			document.outputForm.outputText.value += ("i");
+			break;			
+			case 2:
+			document.outputForm.outputText.value += ("h");
+			break;
+			case 3:
+			document.outputForm.outputText.value += ("g");
+			break;
+			case 4:
+			document.outputForm.outputText.value += ("f");
+			break;
+			case 5:
+			document.outputForm.outputText.value += ("e");
+			break;
+			case 6:
+			document.outputForm.outputText.value += ("d");
+			break;
+			case 7:
+			document.outputForm.outputText.value += ("c");
+			break;
+			case 8:
+			document.outputForm.outputText.value += ("b");
+			break;
+			case 9:
+			document.outputForm.outputText.value += ("a");
+			break;
+			case 10:
+			document.outputForm.outputText.value = ("");
+			break;
+			case 11:
+			document.outputForm.outputText.value += (" ");
+			break;
+			case 12:
+			document.outputForm.outputText.value += (",");
+			break;
+			case 13:
+			document.outputForm.outputText.value += (".");
+			break;
+			case 14:
+			document.outputForm.outputText.value += ("0");
+			break;
+			case 15:
+			document.outputForm.outputText.value += ("9");
+			break;
+			case 16:
+			document.outputForm.outputText.value += ("8");
+			break;
+			case 17:
+			document.outputForm.outputText.value += ("7");
+			break;
+			case 18:
+			document.outputForm.outputText.value += ("6");
+			break;
+			case 19:
+			document.outputForm.outputText.value += ("5");
+			break;
+			case 20:
+			document.outputForm.outputText.value += ("4");
+			break;
+			case 21:
+			document.outputForm.outputText.value += ("3");
+			break;
+			case 22:
+			document.outputForm.outputText.value += ("2");
+			break;
+			case 23:
+			document.outputForm.outputText.value += ("1");
+			break;
+			case 24:
+			document.outputForm.outputText.value += ("z");
+			break;
+			case 25:
+			document.outputForm.outputText.value += ("y");
+			break;
+			case 26:
+			document.outputForm.outputText.value += ("x");
+			break;
+			case 27:
+			document.outputForm.outputText.value += ("w");
+			break;
+			case 28:
+			document.outputForm.outputText.value += ("v");
+			break;
+			case 29:
+			document.outputForm.outputText.value += ("u");
+			break;
+			case 30:
+			document.outputForm.outputText.value += ("t");
+			break;
+			case 31:
+			document.outputForm.outputText.value += ("s");
+			break;
+			case 32:
+			document.outputForm.outputText.value += ("r");
+			break;
+			case 33:
+			document.outputForm.outputText.value += ("q");
+			break;
+			case 34:
+			document.outputForm.outputText.value += ("p");
+			break;
+			case 35:
+			document.outputForm.outputText.value += ("o");
+			break;
+			case 36:
+			document.outputForm.outputText.value += ("n");
+			break;
+			case 37:
+			document.outputForm.outputText.value += ("m");
+			break;
+			case 38:
+			document.outputForm.outputText.value += ("l");
+			break;
+			case 39:
+			document.outputForm.outputText.value += ("k");
+			break;
+		}
+		// console.log("wheel deg " + currentWheelRotation + " segment " + currentSegment);
+	}
+		</script>
+    </body>
+</html>
