@@ -1,0 +1,172 @@
+<html>
+    <head>
+		<!bugs: wheel speed control not working, stops after 5 360deg turns>
+        <title>rotary keyboard</title>
+        <link rel="stylesheet" href="../sw.css">
+        <script src="../js/Winwheel.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    </head>
+	<body>
+		<div class="container1left">
+		<div class="container2">
+		    <h1 class="container1center">rotary keyboard</h1>
+			<p>the best input method</p>
+            <p>type by clicking print when the guide line is overlapping the wheel segment containing your desired character</p>
+			<p><a href="https://52554d41.xyz/">back to homepage</a></p>
+            <br>
+		<div class="container1center">
+            <canvas id="canvas" width="434" height="434">
+                <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+            </canvas>
+        </div>
+		<br>
+		<br>
+		<div class="container1center">
+			<button onclick="rotaryKb.startAnimation()">start</button>
+			<button onclick="printText()">print</button>
+			<button onclick="resetWheel()">stop</button>
+			<!button onclick="printTextDebug()"print (debug)/button>
+			<br>
+			<br>			
+			<label>
+			<input id="pointerToggleBox" type="checkbox"checked="checked"> guide line 
+			</label>
+			<!pwheel speed (less is faster)/p>
+			<!input type="text" id="speedRange" value="91">
+			<!input type="range" min="15" max="168" value="91" class="slider" id="speedRange">
+			<!pcurrent speed: <!span id="currentSpeed"/span/p>
+			<button onclick="saveSettings()">save settings</button>
+			<br>
+			<br>
+			<form name="outputForm">
+			<textarea id="outputText" rows="5" placeholder="output here..." readonly></textarea>
+			</form>
+		</div>
+		</div>
+		</div>
+        <script>
+            // Create new wheel object specifying the parameters at creation time.
+			var segments = 40;
+			var rotationSpeed= 40;
+            let rotaryKb = new Winwheel({
+                'numSegments'  : segments,     // Specify number of segments.
+                'outerRadius'  : 212,   
+				'innerRadius'  : 33,
+                'textFontSize' : 16,    
+				'pointerAngle' : 90,
+                'segments'     :        // Define segments including colour and text.
+                [
+                   {'fillStyle' : '#FFAE50', 'text' : 'a'},
+                   {'fillStyle' : '#FFAE50', 'text' : 'b'},
+                   {'fillStyle' : '#FFAE50', 'text' : 'c'},
+                   {'fillStyle' : '#FFAE50', 'text' : 'd'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'e'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'f'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'g'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'h'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'i'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'j'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'k'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'l'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'm'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'n'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'o'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'p'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'q'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'r'},
+				   {'fillStyle' : '#FFAE50', 'text' : 's'},
+				   {'fillStyle' : '#FFAE50', 'text' : 't'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'u'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'v'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'w'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'x'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'y'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'z'},
+                   {'fillStyle' : '#FFAE50', 'text' : '1'},
+                   {'fillStyle' : '#FFAE50', 'text' : '2'},
+                   {'fillStyle' : '#FFAE50', 'text' : '3'},
+				   {'fillStyle' : '#FFAE50', 'text' : '4'},
+				   {'fillStyle' : '#FFAE50', 'text' : '5'}, 
+				   {'fillStyle' : '#FFAE50', 'text' : '6'},
+				   {'fillStyle' : '#FFAE50', 'text' : '7'},
+				   {'fillStyle' : '#FFAE50', 'text' : '8'},
+				   {'fillStyle' : '#FFAE50', 'text' : '9'},
+				   {'fillStyle' : '#FFAE50', 'text' : '0'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'period'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'comma'},
+				   {'fillStyle' : '#FFAE50', 'text' : 'space'},
+                   {'fillStyle' : '#FFAE50', 'text' : 'clear all text'}
+                ],
+                'animation' :           // Specify the animation to use.
+                {
+                    'type' : 'spinOngoing',
+                    'duration' : rotationSpeed  // The speed is controlled by this, less is faster.
+                }
+            });
+			
+			function pointerToggle() {
+			var isChecked = document.getElementById("pointerToggleBox").checked;			
+				if(isChecked) {
+				rotaryKb.pointerGuide.display = true;
+				rotaryKb.draw()
+				console.log("pointer on");
+				} else {
+				rotaryKb.pointerGuide.display = false;
+				rotaryKb.draw()
+				console.log("pointer off");
+			}
+		}
+			function saveSettings() {
+			pointerToggle();
+			// speedOutput.innerHTML = speedInput.value;
+			// rotationSpeed = speedInput.value;
+			// rotaryKb.animation.duration = rotationSpeed;
+			// rotaryKb.startAnimation(); 
+		}
+			function printTextDebug() {
+			let printSegment = rotaryKb.getIndicatedSegment();
+			alert("print: " + printSegment.text);
+			console.log("print: " + printSegment.text);
+		}
+			function printText() {
+			var indicatedSegment = rotaryKb.getIndicatedSegment();
+			switch (indicatedSegment.text) {
+				case "space": {
+					document.outputForm.outputText.value += (" ");
+					console.log("space");
+					break;
+				}
+				case "clear all text": {
+					document.outputForm.outputText.value = ("");
+					console.log("clear");
+					break;
+				}
+				case "comma": {
+					document.outputForm.outputText.value += (",");
+					console.log(",");
+					break;
+				}
+				case "period": {
+					document.outputForm.outputText.value += (".");
+					console.log(".");
+					break;
+				}
+				default: {
+					document.outputForm.outputText.value += indicatedSegment.text;
+					console.log("default (" + indicatedSegment.text + ")")
+				}
+			}
+		}
+			function resetWheel() {
+            rotaryKb.stopAnimation(); 
+            // rotaryKb.rotationAngle = 0;     
+            // rotaryKb.draw();                
+		}
+			// var speedInput = document.getElementById("speedRange");
+			// var speedOutput = document.getElementById("currentSpeed");
+			// speedOutput.innerHTML = speedInput.value;
+			// rotationSpeed = speedInput.value;
+			pointerToggle();
+        </script>
+    </body>
+</html>
