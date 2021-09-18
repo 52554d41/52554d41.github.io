@@ -62,3 +62,73 @@ body {
   background: #50A1FF;
   cursor: pointer;
 }
+
+.wheel {
+    width: 434px;
+    height: 434px;
+	-webkit-animation:spin 20s linear infinite;
+	-moz-animation:spin 20s linear infinite;
+	animation:spin 20s linear infinite;
+	-webkit-animation-play-state: paused;
+	z-index:1;
+    position:relative;
+}
+
+.arrow {
+	display: inline;
+	z-index:8;
+    position:relative;
+	max-width: 60%;
+    height: auto;
+	top:-154px;
+	opacity:64;
+}
+
+.buttons {
+	z-index:7;
+	position:relative;
+}
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+	padding: 15px 0;
+}

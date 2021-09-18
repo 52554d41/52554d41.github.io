@@ -1,172 +1,210 @@
 <html>
     <head>
-		<!bugs: wheel speed control not working, stops after 5 360deg turns>
+		<!todo: wheel speed control>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>rotary keyboard</title>
-        <link rel="stylesheet" href="../sw.css">
-        <script src="../js/Winwheel.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+		<link rel="stylesheet" href="../sw.css">
     </head>
 	<body>
 		<div class="container1left">
 		<div class="container2">
 		    <h1 class="container1center">rotary keyboard</h1>
 			<p>the best input method</p>
-            <p>type by clicking print when the guide line is overlapping the wheel segment containing your desired character</p>
+            <p>type by clicking print when the arrow points at your desired character</p>
 			<p><a href="https://52554d41.xyz/">back to homepage</a></p>
             <br>
-		<div class="container1center">
-            <canvas id="canvas" width="434" height="434">
-                <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
-            </canvas>
-        </div>
-		<br>
-		<br>
-		<div class="container1center">
-			<button onclick="rotaryKb.startAnimation()">start</button>
-			<button onclick="printText()">print</button>
-			<button onclick="resetWheel()">stop</button>
-			<!button onclick="printTextDebug()"print (debug)/button>
-			<br>
-			<br>			
-			<label>
-			<input id="pointerToggleBox" type="checkbox"checked="checked"> guide line 
-			</label>
-			<!pwheel speed (less is faster)/p>
-			<!input type="text" id="speedRange" value="91">
-			<!input type="range" min="15" max="168" value="91" class="slider" id="speedRange">
-			<!pcurrent speed: <!span id="currentSpeed"/span/p>
-			<button onclick="saveSettings()">save settings</button>
 			<br>
 			<br>
-			<form name="outputForm">
-			<textarea id="outputText" rows="5" placeholder="output here..." readonly></textarea>
-			</form>
+			<div class="container1center">
+				<img class="wheel" id="wheel" src="../imgs/wheel.png" alt="wheel" width="434" height="434">
+				<img class="arrow" id="arrow" src="../imgs/arrow.png" alt="arrow" width="128" height="128">
+				<br>
+				<br>
+				<div class="buttons">
+				<button class="buttons" onclick="startWheel()">start</button>
+				<button class="buttons" onclick="printText()">print</button>
+				<button class="buttons" onclick="stopWheel()">stop</button>
+				<!button onclick="printTextDebug()"print (debug)/button>
+				<br>
+				<br>			
+				<label>
+				<input id="arrowToggleBox" type="checkbox"checked="checked"> arrow 
+				</label>
+				<!pwheel speed (less is faster)/p>
+				<!input type="text" id="speedRange" value="91">
+				<!input type="range" min="15" max="168" value="91" class="slider" id="speedRange">
+				<!pcurrent speed: <!span id="currentSpeed"/span/p>
+				<button onclick="arrowToggle()">save settings</button>
+				<br>
+				<br>
+				</div>
+				<form name="outputForm">
+				<textarea id="outputText" rows="5" placeholder="output here..." readonly></textarea>
+				</form>
+			</div>
 		</div>
 		</div>
-		</div>
-        <script>
-            // Create new wheel object specifying the parameters at creation time.
-			var segments = 40;
-			var rotationSpeed= 40;
-            let rotaryKb = new Winwheel({
-                'numSegments'  : segments,     // Specify number of segments.
-                'outerRadius'  : 212,   
-				'innerRadius'  : 33,
-                'textFontSize' : 16,    
-				'pointerAngle' : 90,
-                'segments'     :        // Define segments including colour and text.
-                [
-                   {'fillStyle' : '#FFAE50', 'text' : 'a'},
-                   {'fillStyle' : '#FFAE50', 'text' : 'b'},
-                   {'fillStyle' : '#FFAE50', 'text' : 'c'},
-                   {'fillStyle' : '#FFAE50', 'text' : 'd'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'e'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'f'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'g'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'h'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'i'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'j'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'k'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'l'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'm'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'n'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'o'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'p'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'q'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'r'},
-				   {'fillStyle' : '#FFAE50', 'text' : 's'},
-				   {'fillStyle' : '#FFAE50', 'text' : 't'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'u'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'v'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'w'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'x'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'y'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'z'},
-                   {'fillStyle' : '#FFAE50', 'text' : '1'},
-                   {'fillStyle' : '#FFAE50', 'text' : '2'},
-                   {'fillStyle' : '#FFAE50', 'text' : '3'},
-				   {'fillStyle' : '#FFAE50', 'text' : '4'},
-				   {'fillStyle' : '#FFAE50', 'text' : '5'}, 
-				   {'fillStyle' : '#FFAE50', 'text' : '6'},
-				   {'fillStyle' : '#FFAE50', 'text' : '7'},
-				   {'fillStyle' : '#FFAE50', 'text' : '8'},
-				   {'fillStyle' : '#FFAE50', 'text' : '9'},
-				   {'fillStyle' : '#FFAE50', 'text' : '0'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'period'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'comma'},
-				   {'fillStyle' : '#FFAE50', 'text' : 'space'},
-                   {'fillStyle' : '#FFAE50', 'text' : 'clear all text'}
-                ],
-                'animation' :           // Specify the animation to use.
-                {
-                    'type' : 'spinOngoing',
-                    'duration' : rotationSpeed  // The speed is controlled by this, less is faster.
-                }
-            });
-			
-			function pointerToggle() {
-			var isChecked = document.getElementById("pointerToggleBox").checked;			
-				if(isChecked) {
-				rotaryKb.pointerGuide.display = true;
-				rotaryKb.draw()
-				console.log("pointer on");
-				} else {
-				rotaryKb.pointerGuide.display = false;
-				rotaryKb.draw()
-				console.log("pointer off");
-			}
+        <script>		
+		function getCurrentRotation(el) {
+		var st = window.getComputedStyle(el, null);
+		var tm = st.getPropertyValue("-webkit-transform") ||
+           st.getPropertyValue("-moz-transform") ||
+           st.getPropertyValue("-ms-transform") ||
+           st.getPropertyValue("-o-transform") ||
+           st.getPropertyValue("transform") ||
+           "none";
+		if (tm != "none") {
+			var values = tm.split('(')[1].split(')')[0].split(',');
+			var angle = Math.round(Math.atan2(values[1],values[0]) * (180/Math.PI));
+			return (angle < 0 ? angle + 360 : angle); 
 		}
-			function saveSettings() {
-			pointerToggle();
-			// speedOutput.innerHTML = speedInput.value;
-			// rotationSpeed = speedInput.value;
-			// rotaryKb.animation.duration = rotationSpeed;
-			// rotaryKb.startAnimation(); 
+		return 0;
+	}
+		const arrow = document.getElementById('arrow');
+		function arrowToggle() {
+		var isChecked = document.getElementById("arrowToggleBox").checked;			
+			if(isChecked) {
+			arrow.style.display = "inline";
+			// console.log("arrow on");
+			} else {
+			arrow.style.display = "none";
+			// console.log("arrow off");
 		}
-			function printTextDebug() {
-			let printSegment = rotaryKb.getIndicatedSegment();
-			alert("print: " + printSegment.text);
-			console.log("print: " + printSegment.text);
+	}	
+		const wheel = document.getElementById('wheel');
+		function startWheel() {
+		wheel.style.animationPlayState = "running";
+	}
+		function stopWheel() {
+		wheel.style.animationPlayState = "paused";
+	}
+		function printText() {
+		var currentWheelRotation = getCurrentRotation(document.getElementById("wheel"));
+		var currentSegment = Math.floor(currentWheelRotation / 9);
+		switch(currentSegment) {
+			case 0:
+			document.outputForm.outputText.value += ("j");
+			break;
+			case 1:
+			document.outputForm.outputText.value += ("i");
+			break;			
+			case 2:
+			document.outputForm.outputText.value += ("h");
+			break;
+			case 3:
+			document.outputForm.outputText.value += ("g");
+			break;
+			case 4:
+			document.outputForm.outputText.value += ("f");
+			break;
+			case 5:
+			document.outputForm.outputText.value += ("e");
+			break;
+			case 6:
+			document.outputForm.outputText.value += ("d");
+			break;
+			case 7:
+			document.outputForm.outputText.value += ("c");
+			break;
+			case 8:
+			document.outputForm.outputText.value += ("b");
+			break;
+			case 9:
+			document.outputForm.outputText.value += ("a");
+			break;
+			case 10:
+			document.outputForm.outputText.value = ("");
+			break;
+			case 11:
+			document.outputForm.outputText.value += (" ");
+			break;
+			case 12:
+			document.outputForm.outputText.value += (",");
+			break;
+			case 13:
+			document.outputForm.outputText.value += (".");
+			break;
+			case 14:
+			document.outputForm.outputText.value += ("0");
+			break;
+			case 15:
+			document.outputForm.outputText.value += ("9");
+			break;
+			case 16:
+			document.outputForm.outputText.value += ("8");
+			break;
+			case 17:
+			document.outputForm.outputText.value += ("7");
+			break;
+			case 18:
+			document.outputForm.outputText.value += ("6");
+			break;
+			case 19:
+			document.outputForm.outputText.value += ("5");
+			break;
+			case 20:
+			document.outputForm.outputText.value += ("4");
+			break;
+			case 21:
+			document.outputForm.outputText.value += ("3");
+			break;
+			case 22:
+			document.outputForm.outputText.value += ("2");
+			break;
+			case 23:
+			document.outputForm.outputText.value += ("1");
+			break;
+			case 24:
+			document.outputForm.outputText.value += ("z");
+			break;
+			case 25:
+			document.outputForm.outputText.value += ("y");
+			break;
+			case 26:
+			document.outputForm.outputText.value += ("x");
+			break;
+			case 27:
+			document.outputForm.outputText.value += ("w");
+			break;
+			case 28:
+			document.outputForm.outputText.value += ("v");
+			break;
+			case 29:
+			document.outputForm.outputText.value += ("u");
+			break;
+			case 30:
+			document.outputForm.outputText.value += ("t");
+			break;
+			case 31:
+			document.outputForm.outputText.value += ("s");
+			break;
+			case 32:
+			document.outputForm.outputText.value += ("r");
+			break;
+			case 33:
+			document.outputForm.outputText.value += ("q");
+			break;
+			case 34:
+			document.outputForm.outputText.value += ("p");
+			break;
+			case 35:
+			document.outputForm.outputText.value += ("o");
+			break;
+			case 36:
+			document.outputForm.outputText.value += ("n");
+			break;
+			case 37:
+			document.outputForm.outputText.value += ("m");
+			break;
+			case 38:
+			document.outputForm.outputText.value += ("l");
+			break;
+			case 39:
+			document.outputForm.outputText.value += ("k");
+			break;
 		}
-			function printText() {
-			var indicatedSegment = rotaryKb.getIndicatedSegment();
-			switch (indicatedSegment.text) {
-				case "space": {
-					document.outputForm.outputText.value += (" ");
-					console.log("space");
-					break;
-				}
-				case "clear all text": {
-					document.outputForm.outputText.value = ("");
-					console.log("clear");
-					break;
-				}
-				case "comma": {
-					document.outputForm.outputText.value += (",");
-					console.log(",");
-					break;
-				}
-				case "period": {
-					document.outputForm.outputText.value += (".");
-					console.log(".");
-					break;
-				}
-				default: {
-					document.outputForm.outputText.value += indicatedSegment.text;
-					console.log("default (" + indicatedSegment.text + ")")
-				}
-			}
-		}
-			function resetWheel() {
-            rotaryKb.stopAnimation(); 
-            // rotaryKb.rotationAngle = 0;     
-            // rotaryKb.draw();                
-		}
-			// var speedInput = document.getElementById("speedRange");
-			// var speedOutput = document.getElementById("currentSpeed");
-			// speedOutput.innerHTML = speedInput.value;
-			// rotationSpeed = speedInput.value;
-			pointerToggle();
-        </script>
+		// console.log("wheel deg " + currentWheelRotation + " segment " + currentSegment);
+	}
+		</script>
     </body>
 </html>

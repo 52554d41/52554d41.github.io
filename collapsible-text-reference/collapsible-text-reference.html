@@ -1,0 +1,63 @@
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>collapsible text reference</title>
+		<link rel="stylesheet" href="../sw.css">
+    </head>
+<body>
+<div class="container1left">
+<div class="container2">
+<div class="container1center">
+<h2>collapsible text reference</h2>
+</div>
+<p>single</p>
+<button type="button" class="collapsible">FIA World Endurance Championship</button>
+<div class="content">
+  <p>The FIA World Endurance Championship is an auto racing world championship organized by the Automobile Club de l'Ouest (ACO) and sanctioned by the Fédération Internationale de l'Automobile (FIA).
+  The series supersedes the ACO's former Intercontinental Le Mans Cup which began in 2010 and is the first endurance series of world championship status since the demise of the World Sportscar Championship at the end of 1992.
+  The World Endurance Championship name was previously used by the FIA from 1981 to 1985.</p>
+</div>
+
+<p>multiple</p>
+<button type="button" class="collapsible">History</button>
+<div class="content">
+  <p>The World Endurance Championship was first run in 2012 as a replacement for the Intercontinental Le Mans Cup, 
+  following much of the same format and featuring eight endurance races across the world, including the 24 Hours of Le Mans. 
+  There were four categories: LMP1 and LMP2 prototypes along with GTE grand tourers, divided into GTE Pro for teams with professional driver line-ups, and GTE Am for teams featuring a mixture of amateur drivers.</p>
+</div>
+<button type="button" class="collapsible">Format</button>
+<div class="content">
+  <p>Ten titles are awarded each season based on total point tally, with four being deemed world championships: 
+  Hypercar World Endurance Drivers' Championship, GT World Endurance Drivers' Championship, Hypercar World Endurance (Manufacturers') Championship and GT World Endurance Manufacturer's Championship. 
+  The points system is similar to that used in the FIA's other world championships, awarding points to the top ten finishers on a sliding point margin scale from first to tenth. 
+  Cars finishing the race but classified eleventh or further are awarded a half point. 
+  For 8 and 10-hour races, points are worth roughly 1.5x as much (i.e. 25 points for a win is worth 38 points at these races). 
+  For the 24 Hours of Le Mans, points are worth roughly 2x as much.</p>
+</div>
+<button type="button" class="collapsible">Races</button>
+<div class="content">
+  <p>Current races: 6 Heures de Spa-Francorchamps; 6 Hours of Monza; 8 Hours of Bahrain; 8 Hours of Portimão; 24 Hours of Le Mans</p>
+  <p>Former races: 4 Hours of Shanghai; 4 Hours of Silverstone; 6 Hours of Fuji; 6 Hours of Nürburgring; 6 Hours of Mexico;	6 Hours of São Paulo; 12 Hours of Sebring; 1000 Miles of Sebring; Lone Star Le Mans</p>
+</div>
+</div>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+</html>
